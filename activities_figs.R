@@ -90,6 +90,11 @@ fig2 <- ggplot(data_age_all %>% filter(date>="2020-03-01"), aes(x=date, y=prop_o
   scale_color_manual(values=colors_age) +
   labs(x="", y="Participation in Other Activities (%)", color="Age") +
   theme_bw() + theme(panel.grid=element_blank())
+plot_grid(fig1 + theme(legend.position="none"), fig2 + theme(legend.position="none"), get_legend(fig1), 
+          nrow=1, ncol=3, rel_widths=c(0.45, 0.45, 0.1), align="hv", labels=c("A", "B", ""))
+ggsave("fig2_final_v2.jpg", dpi=500, height=4, width=10)
+
+#NEW APPENDIX FIGURE (PREVIOUSLY PART OF FIGURE 2)
 fig3 <- ggplot(data_covid_all %>% filter(date>="2020-03-01"), aes(x=date, y=prop_work_any*100, color=covidriskcdcr)) +
   geom_line(size=0.9) + scale_x_date(breaks=date_breaks("months"), labels=date_format("%b")) +
   scale_y_continuous(limits=c(0, 49), expand=c(0,0)) +
@@ -102,10 +107,9 @@ fig4 <- ggplot(data_covid_all %>% filter(date>="2020-03-01"), aes(x=date, y=prop
   scale_color_manual(values=colors_covid) +
   labs(x="", y="Participation in Other Activities (%)", color="Covid-19\nRisk Score") +
   theme_bw() + theme(panel.grid=element_blank())
-plot_grid(fig1 + theme(legend.position="none"), fig2 + theme(legend.position="none"), get_legend(fig1), 
-          fig3 + theme(legend.position="none"), fig4 + theme(legend.position="none"), get_legend(fig3),
-          nrow=2, ncol=3, rel_widths=c(0.45, 0.45, 0.1), align="hv", labels=c("A", "B", "", "C", "D", ""))
-ggsave("fig2_final.jpg", dpi=500, height=8, width=10)
+plot_grid(fig3 + theme(legend.position="none"), fig4 + theme(legend.position="none"), get_legend(fig3),
+          nrow=1, ncol=3, rel_widths=c(0.45, 0.45, 0.1), align="hv", labels=c("A", "B", ""))
+ggsave("activities_covid_risk.jpg", dpi=500, height=4, width=10)
 
 #FIGURE S133: OUTBREAK VS. NON-OUTBREAK INSTITUTIONS
 fig1 <- ggplot(data_age_outbreak %>% filter(date>="2020-03-01"), aes(x=date, y=prop_work_any*100, color=agecat)) +
